@@ -18,7 +18,8 @@ _infra_update() {
 }
 
 _infra_rprompt() {
-    local data docker_count multipass_count qemu_count result=""
+    local data docker_count multipass_count qemu_count
+    local -a parts
 
     # Init cache on first run
     if [[ ! -f "$_INFRA_CACHE" ]]; then
@@ -41,11 +42,15 @@ _infra_rprompt() {
     multipass_count="${rest%%:*}"
     qemu_count="${rest##*:}"
 
-    [[ $docker_count -gt 0 ]]    && result+="%F{cyan}🐳 docker:${docker_count}%f "
-    [[ $multipass_count -gt 0 ]] && result+="%F{yellow}📦 mp:${multipass_count}%f "
-    [[ $qemu_count -gt 0 ]]      && result+="%F{magenta}🖥  vm:${qemu_count}%f"
+    [[ $docker_count -gt 0 ]]    && parts+=("%F{cyan}🐳 ${docker_count}%f")
+    [[ $multipass_count -gt 0 ]] && parts+=("%F{yellow}🔶 ${multipass_count}%f")
+    [[ $qemu_count -gt 0 ]]      && parts+=("%F{magenta}🗄️ ${qemu_count}%f")
 
-    RPROMPT="$result"
+    if (( ${#parts[@]} > 0 )); then
+        RPROMPT="${(j: %F{240}·%f :)parts}"
+    else
+        RPROMPT=""
+    fi
 }
 
 autoload -Uz add-zsh-hook

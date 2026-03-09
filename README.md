@@ -4,9 +4,15 @@ Plugin per **Oh My Zsh** che mostra a colpo d'occhio nel prompt a destra (RPROMP
 
 | Indicatore | Cosa mostra |
 |---|---|
-| 🐳 `docker:N` | Container Docker attivi |
-| 📦 `mp:N` | VM Multipass in esecuzione |
-| 🖥 `vm:N` | VM QEMU/libvirt in esecuzione |
+| 🐳 `N` | Container Docker attivi |
+| 🔶 `N` | VM Multipass in esecuzione |
+| 🗄️ `N` | VM QEMU/libvirt in esecuzione |
+
+Gli indicatori attivi sono separati da `·` grigio. Esempio con tutti e tre attivi:
+
+```
+🐳 3 · 🔶 2 · 🗄️ 1
+```
 
 Gli indicatori appaiono solo se il contatore è maggiore di zero, quindi il prompt rimane pulito quando non c'è nulla in esecuzione.
 
