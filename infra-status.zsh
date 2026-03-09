@@ -47,7 +47,12 @@ _infra_rprompt() {
     [[ $qemu_count -gt 0 ]]      && parts+=("%F{magenta}🗄️ ${qemu_count}%f")
 
     if (( ${#parts[@]} > 0 )); then
-        RPROMPT="${(j: %F{240}·%f :)parts}"
+        local result="${parts[1]}"
+        local i
+        for ((i=2; i<=${#parts[@]}; i++)); do
+            result+=" %F{240}·%f ${parts[$i]}"
+        done
+        RPROMPT="$result"
     else
         RPROMPT=""
     fi
